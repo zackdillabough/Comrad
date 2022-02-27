@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>650910790232-etl8h7pf5ccend10vqaf55i7jejgq0vd.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.650910790232-etl8h7pf5ccend10vqaf55i7jejgq0vd</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC7xnORot4gpj0ILLi0RoyNlN0ySaN3LoY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>650910790232</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.comrad.app</string>
+	<key>PROJECT_ID</key>
+	<string>comrad-642c9</string>
+	<key>STORAGE_BUCKET</key>
+	<string>comrad-642c9.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:650910790232:ios:45d1dbccbad41fe120d02d</string>
+</dict>
+</plist>
