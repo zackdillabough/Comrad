@@ -13,6 +13,10 @@ const signIn = (state = initialState, action) => {
                 userName: action.payload,
             };
         case SIGN_OUT:
+            return {
+                isLoggedIn: false,
+                userName: {}
+            }
         default:
             return state;
     }

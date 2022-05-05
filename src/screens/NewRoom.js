@@ -5,22 +5,18 @@ import {Text, TextInput} from 'react-native-paper'
 import NavButton from './../components/general/NavButton';
 
 const mapStateToProps = (state) => ({
-    user: state.signIn,
+    roomName: state.createRoom,
 })
 
-const ConnectedWelcome = ({navigation, user}) => {
+const ConnectedNewRoom = ({navigation, roomName}) => {
+    console.log(roomName)
     return(
-        <View style={styles.container} >
-            <Text style={styles.title}>Welcome, {user.userName.first}</Text>
-            <Pressable>
-                <Text style={styles.subTitle}>Sign out</Text>
+        <View style={styles.container}>
+            <Text style={styles.title}>Welcome to room: {roomName.roomName}</Text>
+            <Pressable onPress={() => navigation.goBack()}>
+                <Text style={styles.subTitle}>Back</Text>
             </Pressable>
-            <View style={styles.body}>
-                <Text style={styles.bodyText}>Join room</Text>
-                <TextInput />
-                <Text style={styles.bodyText}>or</Text>
-                <NavButton title="Create room" onPress={() => navigation.navigate("CreateRoom")}/>
-            </View>
+
         </View>
     );
 }
@@ -54,6 +50,6 @@ const styles = StyleSheet.create({
     }
 });
 
-const Welcome = connect(mapStateToProps)(ConnectedWelcome);
+const NewRoom = connect(mapStateToProps)(ConnectedNewRoom);
 
-export default Welcome;
+export default NewRoom;
