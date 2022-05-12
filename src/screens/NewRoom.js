@@ -1,41 +1,78 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {View, StyleSheet, Pressable} from 'react-native';
-import {Text, TextInput} from 'react-native-paper'
+import { View, StyleSheet, Pressable, ScrollView } from 'react-native';
+import { Text, TextInput } from 'react-native-paper'
 import NavButton from './../components/general/NavButton';
+import Occupant from './../components/general/Occupant';
 
 const mapStateToProps = (state) => ({
-    roomName: state.createRoom,
+    roomInfo: state.createRoom,
 })
 
-const ConnectedNewRoom = ({navigation, roomName}) => {
-    console.log(roomName)
+const ConnectedNewRoom = ({navigation, roomInfo}) => {
+    const muteStyle = {button: {marginBottom: 10}};
+    const leaveStyle = {button: {backgroundColor: "red" }, text: {color: "white"}};
     return(
         <View style={styles.container}>
-            <Text style={styles.title}>Welcome to room: {roomName.roomName}</Text>
-            <Pressable onPress={() => navigation.goBack()}>
-                <Text style={styles.subTitle}>Back</Text>
-            </Pressable>
-
+            <Text style={styles.title}>{roomInfo.roomName}</Text>
+            <Text style={styles.subTitle}>Room code: {roomInfo.roomCode}</Text>
+            <View style={styles.occupantsCtr}>
+                <Text style={[styles.subTitle, {marginBottom: 10}]}>Occupants</Text>
+                <ScrollView style={styles.occupantsList}>
+                    <Occupant info={{name: "Mike"}} onPress={() => console.log("hello")}/>
+                    <Occupant info={{name: "Christy"}} onPress={() => console.log("hello")}/>
+                    <Occupant info={{name: "Zack"}} onPress={() => console.log("hello")}/>
+                    <Occupant info={{name: "Nick"}} onPress={() => console.log("hello")}/>
+                    <Occupant info={{name: "Haley"}} onPress={() => console.log("hello")}/>
+                    <Occupant info={{name: "Bob"}} onPress={() => console.log("hello")}/>
+                    <Occupant info={{name: "Blue"}} onPress={() => console.log("hello")}/>
+                    <Occupant info={{name: "Rick"}} onPress={() => console.log("hello")}/>
+                    <Occupant info={{name: "Rick"}} onPress={() => console.log("hello")}/>
+                    <Occupant info={{name: "Rick"}} onPress={() => console.log("hello")}/>
+                </ScrollView>
+            </View>
+            <View style={styles.bottomCtr}>
+                <NavButton title="Mute" style={muteStyle}/>
+                <NavButton title="Leave room" style={leaveStyle} onPress={() => navigation.navigate("Welcome")}/>
+                <Pressable onPress={() => navigation.goBack()}>
+                    <Text style={styles.subTitle}>Back</Text>
+                </Pressable>
+            </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        margin: 40,
+        display: 'flex',
+        margin: 30,
+        marginTop: 10,
     },
     title: {
-        fontSize: 25,
+        fontSize: 30,
         fontWeight: 'bold',
         marginTop: 50,
-        textAlign: 'center',
+        textAlign: 'left',
     },
     subTitle: {
         fontSize: 18,
         textAlign: 'center',
         marginTop: 10,
+        textAlign: 'left',
+    },
+    occupantsCtr: {
+        marginVertical: 20,
+        height: "60%",
+        // marginTop: 20,
+        // marginBottom: 20,
+    },
+    occupantsList: {
+        borderColor: 'gray',
+        borderWidth: 1,
+        backgroundColor: 'white',
+    },
+    bottomCtr: {
+        padding: 20,
     },
     body: {
         marginTop: 150,

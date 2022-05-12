@@ -11,22 +11,37 @@ const mapDispatchToProps = (dispatch) => ({
     },
 });
 
-const setRoomName = (navigation, roomName, createRoom) => {
-    createRoom(roomName);
+// returns 5-character alphabetical room code that does not already exist
+const createRoomCode = () => {
+    let code = "";
+    for (let i = 0; i < 5; i++) {
+        randomChar = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+        code = code + randomChar;
+    }
+    return code;
+};
+
+// initializes a room with provided room name and randomly generated room code
+const initRoom = (navigation, roomName, createRoom) => {
+    roomCode = createRoomCode();
+    createRoom({roomName, roomCode});
     navigation.navigate("NewRoom");
 };
 
 const ConnectedCreateRoom = ({navigation, createRoom}) => {
     const [name, setName] = useState('');
     return(
-        <View style={styles.container} >
+        <View style={styles.container}>
             <View style={styles.body}>
-                <Text style={styles.bodyText}>Room name</Text>
-                <TextInput onChangeText={(text) => setName(text)}/>
-                <NavButton title="Create room" onPress={() => setRoomName(navigation, name, createRoom)}/>
-                <Pressable onPress={() => navigation.goBack()}>
-                    <Text style={styles.subTitle}>Back</Text>
-                </Pressable>
+                <View style={styles.body}>
+                    <Text style={styles.bodyText}>Room name</Text>
+                    <TextInput onChangeText={(text) => setName(text)}/>
+                    <NavButton title="Create room" onPress={() => initRoom(navigation, name, createRoom)}/>
+                    <NavButton title="gen room code" onPress={() => console.log(createRoomCode())}/>
+                    <Pressable onPress={() => navigation.goBack()}>
+                        <Text style={styles.subTitle}>Back</Text>
+                    </Pressable>
+                </View>
             </View>
         </View>
     );
@@ -40,7 +55,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 25,
         fontWeight: 'bold',
-        marginTop: 50,
+        marginTop: 20,
         textAlign: 'center',
     },
     subTitle: {
@@ -49,7 +64,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     body: {
-        marginTop: 150,
+        marginTop: 130,
         justifyContent: 'center',
     },
     bodyText: {
@@ -59,6 +74,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: 25,
     }
+
 });
 
 const CreateRoom = connect(
