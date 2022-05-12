@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View } from 'react-native';
 import HomeStackNavigator from './src/navigation/home/HomeStackNavigator'
+import { firebase } from './src/firebase/config';
 
 // call main.js
 // if user authenticated --> home.js
