@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "650910790232",
+    "project_id": "comrad-642c9",
+    "storage_bucket": "comrad-642c9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:650910790232:android:23f74f6240aa025820d02d",
+        "android_client_info": {
+          "package_name": "com.comrad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "650910790232-pks5lq69fiipmoh7odpoudkg8i37m4gd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.comrad",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "650910790232-c8peq89hapkmbkj9orvut1hu780r1qq2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOd2cfvJ9aEmNr5asbaNSA8tXuq9tf_x8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "650910790232-c8peq89hapkmbkj9orvut1hu780r1qq2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "650910790232-boq094kall5aanokcpdrk7ggebdip72u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.Comrad"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
