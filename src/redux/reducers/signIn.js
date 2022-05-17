@@ -15,7 +15,7 @@ const signIn = (state = initialState, action) => {
         case SIGN_OUT:
             return {
                 isLoggedIn: false,
-                userName: {}
+                userName: {},
             }
         default:
             return state;
