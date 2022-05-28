@@ -24,20 +24,20 @@ const createRoomCode = () => {
 
 // returns an open room code
 const getRoomCode = async () => {
-    roomCode = createRoomCode();
-    docExists = true;
+    let roomCode = createRoomCode();
+    let docExists = true;
 
     while (docExists) {
         var docRef = firestore().collection("rooms").doc(roomCode);
-            await docRef.get().then((doc) => {
-                if (doc.exists) {
-                    roomCode = createRoomCode();
-                } else {
-                    docExists = false;
-                }
-            }).catch((error) => {
-                console.log("Error getting document:", error);
-            });
+        await docRef.get().then((doc) => {
+            if (doc.exists) {
+                roomCode = createRoomCode();
+            } else {
+                docExists = false;
+            }
+        }).catch((error) => {
+            console.log("Error getting document:", error);
+        });
     }
 
     return roomCode
