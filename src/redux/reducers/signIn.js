@@ -2,7 +2,10 @@ import { SIGN_IN, SIGN_OUT } from '../constants';
 
 const initialState = {
     isLoggedIn: false,
-    userName: {},
+    displayName: "",
+    email: "",
+    uid: "",
+    photoURL: "",
 };
 
 const signIn = (state = initialState, action) => {
@@ -10,12 +13,14 @@ const signIn = (state = initialState, action) => {
         case SIGN_IN:
             return {
                 isLoggedIn: true,
-                userName: action.payload,
+                displayName: action.payload.displayName,
+                email: action.payload.email,
+                uid: action.payload.uid,
+                photoURL: action.payload.photoURL,
             };
         case SIGN_OUT:
             return {
-                isLoggedIn: false,
-                userName: {},
+                initialState
             }
         default:
             return state;

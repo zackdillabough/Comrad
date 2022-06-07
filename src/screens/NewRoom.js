@@ -6,7 +6,7 @@ import NavButton from './../components/general/NavButton';
 import Occupant from './../components/general/Occupant';
 
 const mapStateToProps = (state) => ({
-    roomInfo: state.createRoom,
+    roomInfo: state.roomControl,
 })
 
 const ConnectedNewRoom = ({navigation, roomInfo}) => {
@@ -19,16 +19,7 @@ const ConnectedNewRoom = ({navigation, roomInfo}) => {
             <View style={styles.occupantsCtr}>
                 <Text style={[styles.subTitle, {marginBottom: 10}]}>Occupants</Text>
                 <ScrollView style={styles.occupantsList}>
-                    <Occupant info={{name: "Mike"}} onPress={() => console.log("hello")}/>
-                    <Occupant info={{name: "Christy"}} onPress={() => console.log("hello")}/>
                     <Occupant info={{name: "Zack"}} onPress={() => console.log("hello")}/>
-                    <Occupant info={{name: "Nick"}} onPress={() => console.log("hello")}/>
-                    <Occupant info={{name: "Haley"}} onPress={() => console.log("hello")}/>
-                    <Occupant info={{name: "Bob"}} onPress={() => console.log("hello")}/>
-                    <Occupant info={{name: "Blue"}} onPress={() => console.log("hello")}/>
-                    <Occupant info={{name: "Rick"}} onPress={() => console.log("hello")}/>
-                    <Occupant info={{name: "Rick"}} onPress={() => console.log("hello")}/>
-                    <Occupant info={{name: "Rick"}} onPress={() => console.log("hello")}/>
                 </ScrollView>
             </View>
             <View style={styles.bottomCtr}>
@@ -87,6 +78,8 @@ const styles = StyleSheet.create({
     }
 });
 
-const NewRoom = connect(mapStateToProps)(ConnectedNewRoom);
+const NewRoom = connect(
+    mapStateToProps
+)(ConnectedNewRoom);
 
 export default NewRoom;

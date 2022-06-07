@@ -1,40 +1,42 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { joinRoom } from '../redux/actions/roomControl';
 import {View, StyleSheet, Pressable} from 'react-native';
 import {Text, TextInput} from 'react-native-paper'
 import NavButton from './../components/general/NavButton';
-import firestore from '@react-native-firebase/firestore';
+import { getRoomInfo } from './../services/room';
 
 const mapStateToProps = (state) => ({
     user: state.signIn,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    joinRoom: (roomInfo) => {
+        dispatch(joinRoom(roomInfo));
+    },
+
 })
 
-const ConnectedWelcome = ({navigation, user}) => {
+const ConnectedWelcome = ({navigation, user, joinRoom}) => {
     let [roomCode, setRoomCode] = useState('');
+    let firstName = user.displayName.split(" ")[0]
 
-    const handleSubmit = () => {
-        checkRoomExistence(roomCode);
-    };
-
-    const checkRoomExistence = async (roomCode) => {
-        var docRef = firestore().collection("rooms").doc(roomCode);
-        await docRef.get().then((doc) => {
-            if (doc.exists) {
-                console.log("success");
-                // enter room
-
+    const handleSubmit = async () => {
+        await getRoomInfo(roomCode).then((doc) => {
+            if (Object.keys(doc).length === 0) { 
+                // indicate to user that the room DNE
+                console.log("room DNE"); // sponge
             } else {
-            // else { tell user room does not exist }
-                console.log("dne");
+                const [roomName, participants] = [doc.name, doc.participants];
+                joinRoom({roomCode, roomName, participants})
+                navigation.navigate("NewRoom");
             }
-        }).catch((error) => {
-            console.log("Error getting document:", error);
-        });
+        }).catch((e) => console.log("error: " + e));
     };
 
     return(
         <View style={styles.container} >
-            <Text style={styles.title}>Welcome, {user.userName.first}</Text>
+            <Text style={styles.title}>Welcome, {firstName}</Text>
             <Pressable>
                 <Text style={styles.subTitle}>Sign out</Text>
             </Pressable>
@@ -49,6 +51,7 @@ const ConnectedWelcome = ({navigation, user}) => {
         </View>
     );
 };
+
 
 const styles = StyleSheet.create({
     container: {
@@ -79,6 +82,9 @@ const styles = StyleSheet.create({
     }
 });
 
-const Welcome = connect(mapStateToProps)(ConnectedWelcome);
+const Welcome = connect(
+    mapStateToProps, 
+    mapDispatchToProps
+)(ConnectedWelcome);
 
 export default Welcome;

@@ -2,7 +2,6 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack';
 import Welcome from '../../screens/Welcome';
-import Demo from '../../screens/Demo';
 import Login from '../../screens/Login';
 import CreateRoom from '../../screens/CreateRoom';
 import NewRoom from '../../screens/NewRoom';
