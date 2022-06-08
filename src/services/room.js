@@ -18,14 +18,11 @@ const getUniqueRoomCode = async () => {
     let docExists = true;
 
     while (docExists) {
-        await getRoomInfo(roomCode).then((doc) => {
-            if (Object.keys(doc).length !== 0) {
-                roomCode = getRandomRoomCode();
-            } else
-                docExists = false;
-        }).catch((error) => {
-            console.log("Error getting document:", error);
-        });
+        const doc = await getRoomInfo(roomCode);
+        if (Object.keys(doc).length !== 0)
+            roomCode = getRandomRoomCode();
+        else 
+            docExists = false;
     }
 
     return roomCode
@@ -36,15 +33,11 @@ const getUniqueRoomCode = async () => {
 export const getRoomInfo = async (roomCode) => {
     let data = {};
     roomRef = firestore().collection('rooms').doc(roomCode);
-    await roomRef.get().then((doc) => {
-        if (doc.exists) {
-            data = doc.data();
-        } else {
-            console.log("room does not exist");
-        }
-    }).catch((error) => {
-        console.log("Error getting document:", error);
-    })
+    const doc = await roomRef.get();
+    if (doc.exists) 
+        data = doc.data();
+    else 
+        console.log("room does not exist");
 
     return data;
 };

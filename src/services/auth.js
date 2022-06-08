@@ -7,7 +7,7 @@ import {
 } from '@react-native-google-signin/google-signin';
 
 
-export const saveUserToFirestore = async (user) => {
+const saveUserToFirestore = async (user) => {
     const userRef = firestore().collection('users');
     await userRef.doc(user.uid).set({
         uid:            user.uid,
@@ -33,7 +33,8 @@ export const signInWithGoogle = async () => {
             };
         });
 
-        return user
+        await saveUserToFirestore(user);
+        return user;
 
     } catch (error) {
         // user cancelled the login flow

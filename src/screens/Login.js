@@ -25,14 +25,9 @@ const ConnectedLogin = ({navigation, signIn}) => {
     });
 
     const handleSignIn = async () => {
-        await signInWithGoogle().then( async (user) => {
-            await saveUserToFirestore(user).then(() => {
-                signIn(user);
-                navigation.navigate("Welcome");
-            });
-        }).catch(() => { 
-            console.log("login canceled"); 
-        });
+        const user = await signInWithGoogle();
+        signIn(user);
+        navigation.navigate("Welcome");
     };
 
     return(

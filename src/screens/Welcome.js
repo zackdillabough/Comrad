@@ -40,12 +40,9 @@ const ConnectedWelcome = ({navigation, userInfo, signOut, joinRoom}) => {
     };
 
     const handleSignOut = async () => {
-        await signOutWithGoogle().then(() => {
-            navigation.navigate("Login");
-            signOut();
-        }).catch((e) => {
-            console.log("Error signing out: ", e)
-        });
+        await signOutWithGoogle();
+        navigation.navigate("Login");
+        signOut();
     };
 
     return(
