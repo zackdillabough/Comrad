@@ -4,7 +4,7 @@ import firestore from '@react-native-firebase/firestore';
 const initialState = {
     roomName: "",
     roomCode: "",
-    participants: [],
+    participants: {},
 };
 
 const roomControl = (state = initialState, action) => {
@@ -25,7 +25,7 @@ const roomControl = (state = initialState, action) => {
             return {
                 roomName: "",
                 roomCode: "",
-                participants: [],
+                participants: {},
             };
         default:
             return state;

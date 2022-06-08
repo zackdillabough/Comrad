@@ -7,13 +7,13 @@ import {
 } from '@react-native-google-signin/google-signin';
 
 
-const saveUserToFirestore = (user) => {
-    const userRef = firestore().collection('user');
-    userRef.doc(user.uid).set({
-        uid: user.uid,
-        displayName: user.displayName,
-        photoURL: user.photoURL,
-        email: user.email,
+export const saveUserToFirestore = async (user) => {
+    const userRef = firestore().collection('users');
+    await userRef.doc(user.uid).set({
+        uid:            user.uid,
+        displayName:    user.displayName,
+        photoURL:       user.photoURL,
+        email:          user.email,
     })
 };
 
@@ -55,3 +55,14 @@ export const signInWithGoogle = async () => {
     }
 };
 
+export const signOutWithGoogle = async () => {
+    try {
+        await GoogleSignin.revokeAccess();
+        await GoogleSignin.signOut();
+        auth()
+            .signOut()
+            .then(() => alert('You are signed out!'));
+    } catch (error) {
+        console.error(error);
+    }
+};

@@ -1,9 +1,9 @@
 import { createStore, combineReducers } from 'redux';
-import signIn from './src/redux/reducers/signIn';
+import userControl from './src/redux/reducers/userControl';
 import roomControl from './src/redux/reducers/roomControl';
 
 const rootReducer = combineReducers({
-    signIn: signIn,
+    userControl: userControl,
     roomControl: roomControl,
 });
 

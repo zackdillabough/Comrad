@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux';
-import { signIn } from '../redux/actions/signIn';
+import { signIn } from '../redux/actions/userControl';
 import { bindActionCreators } from 'redux';
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import { Text, TextInput } from 'react-native-paper';
 import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin';
-import { signInWithGoogle } from './../services/auth';
+import { signInWithGoogle, saveUserToFirestore } from './../services/auth';
+import CheckStoreContents from './../components/debug/CheckStoreContents';
 
 const mapDispatchToProps = (dispatch) => ({
     signIn: (user) => {
@@ -24,9 +25,11 @@ const ConnectedLogin = ({navigation, signIn}) => {
     });
 
     const handleSignIn = async () => {
-        await signInWithGoogle().then((user) => {
-            signIn(user);
-            navigation.navigate("Welcome");
+        await signInWithGoogle().then( async (user) => {
+            await saveUserToFirestore(user).then(() => {
+                signIn(user);
+                navigation.navigate("Welcome");
+            });
         }).catch(() => { 
             console.log("login canceled"); 
         });

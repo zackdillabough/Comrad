@@ -5,7 +5,7 @@ import {View, StyleSheet, Pressable} from 'react-native';
 import {Text, TextInput} from 'react-native-paper'
 import NavButton from './../components/general/NavButton';
 import firestore from '@react-native-firebase/firestore';
-import { initRoom } from './../services/room'
+import { initRoom, addParticipant } from './../services/room'
 
 const mapDispatchToProps = (dispatch) => ({
     createRoom: (roomName) => {
@@ -13,21 +13,36 @@ const mapDispatchToProps = (dispatch) => ({
     },
 });
 
-const ConnectedCreateRoom = ({navigation, createRoom}) => {
+const mapStateToProps = (state) => ({
+    userInfo: state.userControl,
+});
+
+const ConnectedCreateRoom = ({navigation, createRoom, userInfo}) => {
     const [name, setName] = useState('');
+
+    const handlePress = async () => {
+        let participants = {};
+        participants[userInfo.uid] = {
+            displayName: userInfo.displayName,
+            photoURL: userInfo.photoURL,
+        }
+
+        const roomCode = await initRoom(name, participants);
+        createRoom({
+            "roomName": name, 
+            "roomCode": roomCode, 
+            "participants": participants,
+        });
+        navigation.navigate("NewRoom");
+    };
+
     return(
         <View style={styles.container}>
             <View style={styles.body}>
                 <View style={styles.body}>
                     <Text style={styles.bodyText}>Room name</Text>
                     <TextInput onChangeText={(text) => setName(text)}/>
-                    <NavButton title="Create room" onPress={ async () => {
-                            await initRoom(name).then((roomCode) => {
-                                createRoom({"roomName": name, "roomCode" : roomCode, "participants" : []})
-                                navigation.navigate("NewRoom");
-                            });
-                        }
-                    }/>
+                    <NavButton title="Create room" onPress={() => handlePress()}/>
                     <Pressable onPress={() => navigation.goBack()}>
                         <Text style={styles.subTitle}>Back</Text>
                     </Pressable>
@@ -68,7 +83,7 @@ const styles = StyleSheet.create({
 });
 
 const CreateRoom = connect(
-    null, 
+    mapStateToProps, 
     mapDispatchToProps
 )(ConnectedCreateRoom);
 

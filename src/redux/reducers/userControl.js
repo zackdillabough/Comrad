@@ -8,7 +8,7 @@ const initialState = {
     photoURL: "",
 };
 
-const signIn = (state = initialState, action) => {
+const userControl= (state = initialState, action) => {
     switch (action.type) {
         case SIGN_IN:
             return {
@@ -20,11 +20,15 @@ const signIn = (state = initialState, action) => {
             };
         case SIGN_OUT:
             return {
-                initialState
-            }
+                isLoggedIn: false,
+                displayName: "",
+                email: "",
+                uid: "",
+                photoURL: "",
+            };
         default:
             return state;
     }
 };
 
-export default signIn;
+export default userControl;

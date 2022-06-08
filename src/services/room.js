@@ -1,5 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
 
+
 // returns a 5-character alphabetical room code
 const getRandomRoomCode = () => {
     let code = "";
@@ -50,14 +51,15 @@ export const getRoomInfo = async (roomCode) => {
 
 // initializes a room with provided room name and randomly generated room code
 // returns room code
-export const initRoom = async (roomName) => {
-    roomCode = await getUniqueRoomCode();
-    firestore()
+export const initRoom = async (roomName, participants) => {
+    let roomCode = await getUniqueRoomCode();
+
+    await firestore()
         .collection('rooms')
         .doc(roomCode)
         .set({
             name: roomName,
-            participants: [],
+            participants: participants,
         })
         .then(() => {
             console.log('room added!');
@@ -68,4 +70,40 @@ export const initRoom = async (roomName) => {
     return roomCode;
 };
 
+export const addParticipant = async (userInfo, roomCode) => {
+    const roomRef = firestore().doc(`rooms/${roomCode}`);
+    return firestore().runTransaction(async transaction => {
+        const roomSnapshot = await transaction.get(roomRef);
 
+        if (!roomSnapshot.exists) {
+            throw 'Room does not exist!';
+        }
+
+        roomSnapshot.data().participants[userInfo.uid] = {
+            displayName: userInfo.displayName,
+            photoURL: userInfo.photoURL,
+        }
+
+        await transaction.update(roomRef, {
+            participants: roomSnapshot.data().participants    
+        });
+    });
+};
+
+export const removeParticipant = async (uid, roomCode) => {
+    const roomRef = firestore().doc(`rooms/${roomCode}`);
+    return firestore().runTransaction(async transaction => {
+        const roomSnapshot = await transaction.get(roomRef);
+
+        if (!roomSnapshot.exists) {
+            throw 'Room does not exist!';
+        }
+
+        delete roomSnapshot.data().participants[uid];
+
+        await transaction.update(roomRef, {
+            participants: roomSnapshot.data().participants    
+        });
+    });
+
+};

@@ -10,7 +10,6 @@ export const joinRoom = roomInfo => ({
     payload: roomInfo,
 });
 
-export const leaveRoom = roomInfo => ({
+export const leaveRoom = () => ({
     type: LEAVE_ROOM,
-    payload: roomInfo,
 });
